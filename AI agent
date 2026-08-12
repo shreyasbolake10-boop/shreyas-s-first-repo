@@ -1,5 +1,4 @@
 import random
-
 # 1. The Activation Function (Decides if the neuron "fires" or not)
 def step_function(sum_value):
     if sum_value >= 0:
