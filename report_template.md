@@ -2,10 +2,10 @@
 
 **Course:** 02AML204 – Introduction to Artificial Intelligence
 
-**PRN:** ____________________  
-**Name:** ____________________  
-**Division:** A / B  
-**Date:** ____________________  
+**PRN:** __25UAM060__________________  
+**Name:** ______Shreyas Ananda Bolake______________  
+**Division:** A   
+**Date:** ____22/9/26________________  
 **GitHub Link:** ____________________
 
 ## 1. Algorithms / Versions Profiled
