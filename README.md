@@ -1,24 +1,36 @@
-# AI Agent: Logical OR Perceptron
+# SLE-2 Profiling Report — BFS vs A* (8-Puzzle)
 
-Welcome to **shreyas-s-first-repo**! This repository contains a foundational Python script that demonstrates how a basic Artificial Intelligence agent learns using a single-layer perceptron model.
+Course: **02AML204 – Introduction to Artificial Intelligence**
 
-## 📌 Project Overview
+This repository contains the empirical performance-analysis experiment for SLE-2.
 
-The code trains a simple AI agent to understand and replicate the **Logical OR** operation. It does this entirely from scratch without using external machine learning libraries like TensorFlow or PyTorch. 
+## Experiment
 
-The AI learns by adjusting its internal "weights" and "bias" over a series of training epochs until it can perfectly predict the correct outputs based on the provided inputs.
+Two search algorithms solve the **same 8-puzzle**:
 
-## ⚙️ How It Works
+- **Algorithm A:** Breadth-First Search (BFS)
+- **Algorithm B:** A* Search with Manhattan-distance heuristic
 
-* **The Environment:** The agent is fed a truth table for the Logical OR operation (Inputs: `[0,0], [0,1], [1,0], [1,1]`).
-* **The Brain:** It uses randomized initial weights and a bias.
-* **Activation Function:** A basic binary `step_function` determines if the artificial neuron "fires" (returns 1) or stays dormant (returns 0).
-* **The Learning Loop:** The agent iterates through the data up to 20 times (epochs). It calculates its error rate and updates its weights using a learning rate of `0.1` until the total error reaches zero.
+The program measures average execution time with Python's `timeit` and nodes expanded by each algorithm.
 
-## 🚀 How to Run the Code
+## Run
 
-1. Ensure you have Python installed on your system.
-2. Clone this repository to your local machine:
-   ```bash
-   git clone [https://github.com/shreyasbolake10-boop/shreyas-s-first-repo.git](https://github.com/shreyasbolake10-boop/shreyas-s-first-repo.git)
+Requires Python 3.9+.
 
+```bash
+python profiling.py
+```
+
+The script runs each algorithm 5 times and prints the average time, nodes expanded, solution depth, and raw timing samples.
+
+**Important:** Run the experiment yourself and use the numbers printed on your machine in the final report. Do not submit placeholder or copied measurements.
+
+## Fair comparison
+
+Both algorithms use the same start state, goal state, Python environment, and measurement method.
+
+## Files
+
+- `profiling.py` — BFS, A*, Manhattan heuristic, node counter, and benchmark.
+- `report_template.md` — SLE-2 report structure.
+- `requirements.txt` — no third-party packages required.
