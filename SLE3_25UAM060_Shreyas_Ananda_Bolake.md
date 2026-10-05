@@ -15,44 +15,101 @@ The 8-Puzzle Solver is an AI search system that finds a sequence of moves from a
 
 ## 2. Context Diagram (Level 1)
 
-**Student/User -> 8-Puzzle Solver -> Solution Result**
+The Context view shows the complete system boundary and the external actor interacting with it.
 
-- **Student/User:** Provides the start state and selects BFS or A*.
-- **8-Puzzle Solver:** Searches the state space for the goal state.
-- **Solution Result:** Returns path/depth/search information.
+```text
++-------------------+        +-------------------------+        +-------------------+
+|   Student / User  | -----> |    8-Puzzle Solver      | -----> |  Solution Result  |
+|                   |        |  Context / System       |        |  Path + Depth     |
++-------------------+        +-------------------------+        +-------------------+
+        |                              |
+        | Start state + algorithm      | Search / solve
+        +------------------------------>
+```
+
+**Explanation:** The user provides the start state and chooses BFS or A*. The 8-Puzzle Solver performs the search and returns the solution information to the user.
 
 ## 3. Container Diagram (Level 2)
 
-1. **Input Module** - Accepts the puzzle state and algorithm choice.
-2. **Search Engine** - Runs BFS or A* search.
-3. **Heuristic Module** - Calculates Manhattan distance for A*.
-4. **Visited / Memory** - Stores visited states or best-known costs.
-5. **Output Module** - Reports the final search result.
+```text
++--------------+      +----------------+      +-------------------+
+| Input Module | ---> |  Search Engine | ---> | Output Module     |
++--------------+      +-------+--------+      +-------------------+
+                              |
+                        +-----+------+
+                        |            |
+                        v            v
+                 +-------------+  +----------------+
+                 |  Heuristic  |  | Visited /      |
+                 |   Module    |  | Memory         |
+                 +-------------+  +----------------+
+```
 
-**Flow:** Input Module -> Search Engine -> Heuristic Module / Visited-Memory -> Output Module
+**Container responsibilities:**
+
+- **Input Module:** Accepts the puzzle state and selected algorithm.
+- **Search Engine:** Executes BFS or A* and coordinates the search.
+- **Heuristic Module:** Calculates Manhattan distance for A*.
+- **Visited / Memory:** Stores visited states or best-known costs to reduce repeated work.
+- **Output Module:** Presents the final search result and solution depth.
 
 ## 4. Component Diagram (Level 3)
 
-### Components inside Search Engine
+**Scope: Search Engine container only.**
 
-1. **Frontier / Open List** - Queue for BFS and priority queue for A*.
-2. **State Expansion** - Generates valid neighbouring puzzle states.
-3. **Goal Test** - Checks whether the current state equals the goal state.
-4. **Path / Result Generation** - Records the search outcome and result information.
+```text
++------------------------------------------------------+
+|                   SEARCH ENGINE                     |
+|                                                      |
+|  +------------------+     +----------------------+  |
+|  | Frontier / Open  | --> | State Expansion      |  |
+|  | List             |     | Generate neighbours  |  |
+|  +------------------+     +----------+-----------+  |
+|                                       |
+|                                       v
+|                            +----------------------+  |
+|                            | Goal Test            |  |
+|                            +----------+-----------+  |
+|                                       |
+|                                       v
+|                            +----------------------+  |
+|                            | Path / Result        |  |
+|                            | Generation           |  |
+|                            +----------------------+  |
++------------------------------------------------------+
+```
+
+**Explanation:** The frontier stores states waiting for expansion; BFS uses a queue while A* uses a priority queue. State Expansion generates legal moves. Goal Test checks the target state, and Result Generation produces the final search result.
 
 ## 5. Code Level Overview (Level 4)
 
-- `State / SearchResult` - Represents a puzzle state and stores search results.
-- `neighbors(state)` - Generates valid next states by moving the blank tile.
-- `bfs(start, goal)` - Performs Breadth-First Search.
-- `a_star(start, goal)` - Performs A* Search.
-- `manhattan(state)` - Calculates the Manhattan-distance heuristic.
-- `benchmark(func)` - Measures algorithm runtime for profiling.
-- `main()` - Runs the comparison and displays results.
+```text
++------------------------------------------------+
+|              CODE LEVEL OVERVIEW              |
++------------------------------------------------+
+| State / SearchResult                           |
+|   -> puzzle state + search statistics          |
+|                                                |
+| neighbors(state)                               |
+|   -> generates legal neighbouring states       |
+|                                                |
+| bfs(start, goal)                               |
+|   -> Breadth-First Search                     |
+|                                                |
+| a_star(start, goal)                            |
+|   -> A* Search                                 |
+|                                                |
+| manhattan(state)                               |
+|   -> Manhattan-distance heuristic              |
+|                                                |
+| benchmark(func), main()                        |
+|   -> profiling and program execution           |
++------------------------------------------------+
+```
 
 ## 6. Design Decisions
 
-The architecture separates input, search, heuristic calculation, memory and output so BFS and A* can share the same state representation. Manhattan distance is isolated so the heuristic can be changed without redesigning the search engine. The modular structure also makes it easier to add other AI search algorithms later.
+The architecture separates input, search, heuristic calculation, memory and output so BFS and A* can share the same puzzle representation. Manhattan distance is isolated so the heuristic can be changed without redesigning the search engine. The modular structure also makes it easier to add other AI search algorithms later.
 
 ## 7. AI Contribution Note
 
